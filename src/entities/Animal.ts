@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Entity } from './Entity';
-import { COLORS } from '../config';
+import { COLORS, ANIMAL_WALK_CYCLE_SPEED, ANIMAL_LEG_SWING, IDLE_POSE_DECAY } from '../config';
 
 export type AnimalType = 'cow' | 'chicken' | 'sheep' | 'pig';
 export type AnimalState = 'idle' | 'walking' | 'grazing' | 'sleeping';
@@ -165,14 +165,14 @@ export class Animal extends Entity {
     this.stateTimer += delta;
 
     if (this.state === 'walking' && this.isMoving()) {
-      this.walkCycle += delta * 6;
-      const swing = Math.sin(this.walkCycle) * 0.3;
+      this.walkCycle += delta * ANIMAL_WALK_CYCLE_SPEED;
+      const swing = Math.sin(this.walkCycle) * ANIMAL_LEG_SWING;
       for (let i = 0; i < this.legs.length; i++) {
         this.legs[i].rotation.x = (i % 2 === 0 ? swing : -swing);
       }
     } else {
       for (const leg of this.legs) {
-        leg.rotation.x *= 0.9;
+        leg.rotation.x *= IDLE_POSE_DECAY;
       }
     }
   }
