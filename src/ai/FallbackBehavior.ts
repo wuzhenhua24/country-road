@@ -2,19 +2,18 @@ import { Character } from '../entities/Character';
 import { Animal } from '../entities/Animal';
 import { NavigationGraph } from '../systems/NavigationGraph';
 import { TimeSystem, DayPhase } from '../systems/TimeSystem';
+import { MIN_STATE_DURATION } from '../config';
 
 export class FallbackBehavior {
   constructor(private navGraph: NavigationGraph) {}
 
   update(character: Character, time: TimeSystem): void {
-    // Don't interrupt active movement
     if (character.isMoving()) return;
 
     const phase = time.getDayPhase();
     const timeSinceStateChange = character.stateTimer;
 
-    // Minimum time in current state before considering a change
-    if (timeSinceStateChange < 3) return;
+    if (timeSinceStateChange < MIN_STATE_DURATION) return;
 
     switch (phase) {
       case 'dawn':

@@ -1,12 +1,13 @@
 import * as THREE from 'three';
+import { ARRIVAL_THRESHOLD } from '../config';
 
 export abstract class Entity {
   group = new THREE.Group();
   velocity = new THREE.Vector3();
-  protected targetPosition: THREE.Vector3 | null = null;
+  targetPosition: THREE.Vector3 | null = null;
   protected path: THREE.Vector3[] = [];
   protected pathIndex = 0;
-  protected speed = 2;
+  speed = 2;
 
   get position(): THREE.Vector3 {
     return this.group.position;
@@ -23,7 +24,7 @@ export abstract class Entity {
   hasReachedTarget(): boolean {
     if (!this.targetPosition) return true;
     const dist = this.group.position.distanceTo(this.targetPosition);
-    return dist < 0.3;
+    return dist < ARRIVAL_THRESHOLD;
   }
 
   isMoving(): boolean {

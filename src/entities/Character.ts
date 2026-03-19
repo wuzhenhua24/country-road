@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Entity } from './Entity';
-import { COLORS } from '../config';
+import { COLORS, WALK_CYCLE_SPEED, WALK_ARM_SWING, IDLE_POSE_DECAY } from '../config';
 
 export type CharacterRole = 'farmer' | 'craftsman' | 'elder' | 'child';
 export type CharacterState = 'idle' | 'walking' | 'working' | 'eating' | 'sleeping' | 'socializing';
@@ -109,18 +109,17 @@ export class Character extends Entity {
 
     // Walk animation
     if (this.state === 'walking' && this.isMoving()) {
-      this.walkCycle += delta * 8;
-      const swing = Math.sin(this.walkCycle) * 0.4;
+      this.walkCycle += delta * WALK_CYCLE_SPEED;
+      const swing = Math.sin(this.walkCycle) * WALK_ARM_SWING;
       this.leftArm.rotation.x = swing;
       this.rightArm.rotation.x = -swing;
       this.leftLeg.rotation.x = -swing;
       this.rightLeg.rotation.x = swing;
     } else {
-      // Reset to idle pose
-      this.leftArm.rotation.x *= 0.9;
-      this.rightArm.rotation.x *= 0.9;
-      this.leftLeg.rotation.x *= 0.9;
-      this.rightLeg.rotation.x *= 0.9;
+      this.leftArm.rotation.x *= IDLE_POSE_DECAY;
+      this.rightArm.rotation.x *= IDLE_POSE_DECAY;
+      this.leftLeg.rotation.x *= IDLE_POSE_DECAY;
+      this.rightLeg.rotation.x *= IDLE_POSE_DECAY;
     }
   }
 

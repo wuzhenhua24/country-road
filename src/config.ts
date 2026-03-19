@@ -116,4 +116,18 @@ export const ROTATION_SPEED = 5;
 export const AI_BATCH_INTERVAL = 15000;
 export const AI_BATCH_SIZE = 4;
 export const AI_CACHE_SIZE = 50;
+export const AI_CACHE_TTL = 300000; // 5 minutes
 export const GEMINI_RPM_LIMIT = 5;
+
+// ── Animation ────────────────────────────────────────────────────────────────
+export const WALK_CYCLE_SPEED = 8;
+export const WALK_ARM_SWING = 0.4;
+export const ANIMAL_WALK_CYCLE_SPEED = 6;
+export const ANIMAL_LEG_SWING = 0.3;
+export const IDLE_POSE_DECAY = 0.9;
+
+// ── Behavior ─────────────────────────────────────────────────────────────────
+export const MIN_STATE_DURATION = 3;
+export const CHARACTER_SELECTION_DISTANCE = 3;
+export const ARRIVAL_THRESHOLD = 0.3;
+export const FACING_THRESHOLD = 0.1;

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Character } from '../entities/Character';
+import { CHARACTER_SELECTION_DISTANCE } from '../config';
 
 export class CharacterPanel {
   private panel: HTMLDivElement;
@@ -59,11 +60,11 @@ export class CharacterPanel {
     // Fallback: find nearest character to click point on ground
     const groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
     const clickPoint = new THREE.Vector3();
-    this.raycaster.ray.intersectPlane(groundPlane, clickPoint);
+    const hit = this.raycaster.ray.intersectPlane(groundPlane, clickPoint);
 
-    if (clickPoint) {
+    if (hit) {
       let nearest: Character | null = null;
-      let minDist = 3; // max selection distance
+      let minDist = CHARACTER_SELECTION_DISTANCE;
       for (const c of this.characters) {
         const dist = clickPoint.distanceTo(c.position);
         if (dist < minDist) {
